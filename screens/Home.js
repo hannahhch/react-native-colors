@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
+import PalettePreview from '../components/PalettePreview';
 
 const Home = ({ navigation }) => {
   const COLORS = [
@@ -53,34 +54,18 @@ const Home = ({ navigation }) => {
         data={COLORS}
         keyExtractor={(item) => item.title}
         renderItem={({ item }) => {
-          console.log(item);
           return (
-            <TouchableOpacity
-              style={styles.navigation}
-              onPress={() => {
-                navigation.navigate('ColorPalette', {
-                  paletteName: item.title,
-                  colors: item.colors,
-                });
+            <PalettePreview
+              handlePress={() => {
+                navigation.navigate('ColorPalette', item);
               }}
-            >
-              <Text>{item.title}</Text>
-            </TouchableOpacity>
+              palette={item}
+            />
           );
         }}
       />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  navigation: {
-    backgroundColor: 'white',
-    marginVertical: 10,
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    width: '100%',
-  },
-});
 
 export default Home;
